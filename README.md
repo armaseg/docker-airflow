@@ -30,7 +30,7 @@ Optionally install [Extra Airflow Packages](https://airflow.incubator.apache.org
 
 or combined
 
-    docker build --rm --build-arg AIRFLOW_DEPS="datadog,dask" --build-arg PYTHON_DEPS="flask_oauthlib>=0.9" -t puckel/docker-airflow .
+    docker build --rm --build-arg AIRFLOW_DEPS="amazon,microsoft.azure" --build-arg PYTHON_DEPS="SQLAlchemy==1.3.23"  -t puckel/docker-airflow .
 
 Don't forget to update the airflow images in the docker-compose files to puckel/docker-airflow:latest.
 
@@ -39,6 +39,10 @@ Don't forget to update the airflow images in the docker-compose files to puckel/
 By default, docker-airflow runs Airflow with **SequentialExecutor** :
 
     docker run -d -p 8080:8080 puckel/docker-airflow webserver
+
+If you want to create a volume that maps the directory on your local machine where you willl hold DAG definitions, and the locations where Airflow reads them on the container:
+
+    docker run -d -p 8080:8080 -v /path/to/dags/on/your/local/machine/:/usr/local/airflow/dags puckel/docker-airflow webserver
 
 If you want to run another executor, use the other docker-compose.yml files provided in this repository.
 
